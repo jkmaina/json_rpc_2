@@ -19,7 +19,7 @@ class Client {
   final StreamChannel<dynamic> _channel;
 
   /// The next request id.
-  var _id = 0;
+  int _id = 0;
 
   /// The current batch of requests to be sent together.
   ///
@@ -49,7 +49,7 @@ class Client {
   ///
   /// Note that the client won't begin listening to [responses] until
   /// [Client.listen] is called.
-  Client(StreamChannel<String> channel)
+  Client(int clientId,StreamChannel<String> channel)
       : this.withoutJson(
             jsonDocument.bind(channel).transformStream(ignoreFormatExceptions));
 
@@ -61,6 +61,10 @@ class Client {
   ///
   /// Note that the client won't begin listening to [responses] until
   /// [Client.listen] is called.
+  
+  ///Added client id as a parameter
+  _id = clientId;
+    
   Client.withoutJson(this._channel) {
     done.whenComplete(() {
       for (var request in _pendingRequests.values) {
@@ -114,8 +118,9 @@ class Client {
   /// Throws a [StateError] if the client is closed while the request is in
   /// flight, or if the client is closed when this method is called.
   Future sendRequest(String method, [parameters]) {
-    var id = _id++;
-    _send(method, parameters, id);
+    ///var id = _id++;
+    var clientId = _id;
+    _send(method, parameters, clientId);
 
     var completer = Completer.sync();
     _pendingRequests[id] = _Request(method, completer, Chain.current());
