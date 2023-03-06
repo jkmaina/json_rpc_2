@@ -117,8 +117,8 @@ class Client {
   /// flight, or if the client is closed when this method is called.
   Future sendRequest(String method, [parameters]) {
     ///var id = _id++;
-    var clientId = _id;
-    _send(method, parameters, clientId);
+    var id = _id;
+    _send(method, parameters, id);
 
     var completer = Completer.sync();
     _pendingRequests[id] = _Request(method, completer, Chain.current());
