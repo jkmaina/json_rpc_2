@@ -161,7 +161,7 @@ class Client {
     if (parameters != null) {
       message['params'] = parameters;
     }else{
-      message['params'] = '';
+      message['params'] = '[]';
     }
 
     if (_batch != null) {
