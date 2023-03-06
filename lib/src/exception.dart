@@ -57,7 +57,7 @@ class RpcException implements Exception {
     var id = request is Map ? request['id'] : null;
     if (id is! String && id is! num) id = null;
     return {
-      'jsonrpc': '2.0',
+      //'jsonrpc': '2.0',
       'error': {'code': code, 'message': message, 'data': modifiedData},
       'id': id
     };
