@@ -155,7 +155,14 @@ class Client {
     var message = <String, dynamic>{'method': method};
     
     if (id != null) message['id'] = id;
-    if (parameters != null) message['params'] = parameters;
+    //if (parameters != null) message['params'] = parameters;
+    
+    //params is always required in my use case
+    if (parameters != null) {
+      message['params'] = parameters;
+    }else{
+      message['params'] = '';
+    }
 
     if (_batch != null) {
       _batch!.add(message);
