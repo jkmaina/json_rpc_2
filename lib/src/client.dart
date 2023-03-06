@@ -61,9 +61,7 @@ class Client {
   ///
   /// Note that the client won't begin listening to [responses] until
   /// [Client.listen] is called.
-  
-  ///Added client id as a parameter
-  _id = clientId;
+ 
     
   Client.withoutJson(this._channel) {
     done.whenComplete(() {
