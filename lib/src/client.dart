@@ -149,7 +149,11 @@ class Client {
     }
     if (isClosed) throw StateError('The client is closed.');
 
-    var message = <String, dynamic>{'jsonrpc': '2.0', 'method': method};
+    //var message = <String, dynamic>{'jsonrpc': '2.0', 'method': method};
+    
+    //Remove the jsonrpc 2.0 string for my use case
+    var message = <String, dynamic>{'method': method};
+    
     if (id != null) message['id'] = id;
     if (parameters != null) message['params'] = parameters;
 
@@ -214,7 +218,7 @@ class Client {
   /// Determines whether the server's response is valid per the spec.
   bool _isResponseValid(response) {
     if (response is! Map) return false;
-    if (response['jsonrpc'] != '2.0') return false;
+    //if (response['jsonrpc'] != '2.0') return false; --this is optional in my use case
     var id = response['id'];
     id = (id is String) ? int.parse(id) : id;
     if (!_pendingRequests.containsKey(id)) return false;
