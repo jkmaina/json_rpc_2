@@ -210,11 +210,12 @@ class Client {
   /// Handles a decoded response from the server after batches have been
   /// resolved.
   void _handleSingleResponse(response) {
+    print('valid response'+_isResponseValid(response));
     if (!_isResponseValid(response)) return;
     var id = response['id'];
     id = (id is String) ? int.parse(id) : id;
     var request = _pendingRequests.remove(id)!;
-    if (response.containsKey('result')) {
+    if (response.containsKey('result') && response['result']!=null) {
       request.completer.complete(response['result']);
     } else {
       request.completer.completeError(
@@ -225,20 +226,13 @@ class Client {
   }
 
   /// Determines whether the server's response is valid per the spec.
-  bool _isResponseValid(response) {
-    print(response);
+  bool _isResponseValid(response) {    
     if (response is! Map) return false;
     print(response is! Map);   
     var id = response['id'];
-    id = (id is String) ? int.parse(id) : id;
-    
-    print(!_pendingRequests.containsKey(id));
-    
+    id = (id is String) ? int.parse(id) : id;  
     if (!_pendingRequests.containsKey(id)) return false;
     if (response.containsKey('result')) return true;
-
-    print(!response.containsKey('error'));
-    
     if (!response.containsKey('error')) return false;
     var error = response['error'];
     if (error is! Map) return false;
