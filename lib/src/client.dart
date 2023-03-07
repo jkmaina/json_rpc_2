@@ -228,9 +228,9 @@ class Client {
   bool _isResponseValid(response) {
     print(response);
     print (response is! Map);
-    print(!_pendingRequests.containsKey(id));
-    print(response.containsKey('result'));
-    print(response.containsKey('error'));
+    //print(!_pendingRequests.containsKey(id));
+    //print(response.containsKey('result'));
+    //print(response.containsKey('error'));
     if (response is! Map) return false;
     print(response is! Map);
     //if (response['jsonrpc'] != '2.0') return false; --this is optional in my use case
