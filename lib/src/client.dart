@@ -115,9 +115,8 @@ class Client {
   ///
   /// Throws a [StateError] if the client is closed while the request is in
   /// flight, or if the client is closed when this method is called.
-  Future sendRequest(String method, [parameters]) {
+  Future sendRequest(int id, String method, [parameters]) {
     ///var id = _id++;
-    var id = _id;
     _send(method, parameters, id);
 
     var completer = Completer.sync();
@@ -227,7 +226,13 @@ class Client {
 
   /// Determines whether the server's response is valid per the spec.
   bool _isResponseValid(response) {
+    print(response);
+    print (response is! Map);
+    print(!_pendingRequests.containsKey(id));
+    print(response.containsKey('result'));
+    print(response.containsKey('error'));
     if (response is! Map) return false;
+    print(response is! Map);
     //if (response['jsonrpc'] != '2.0') return false; --this is optional in my use case
     var id = response['id'];
     id = (id is String) ? int.parse(id) : id;
