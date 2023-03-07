@@ -227,18 +227,18 @@ class Client {
   /// Determines whether the server's response is valid per the spec.
   bool _isResponseValid(response) {
     print(response);
-    print (response is! Map);
-    //print(!_pendingRequests.containsKey(id));
-    //print(response.containsKey('result'));
-    //print(response.containsKey('error'));
     if (response is! Map) return false;
-    print(response is! Map);
-    //if (response['jsonrpc'] != '2.0') return false; --this is optional in my use case
+    print(response is! Map);   
     var id = response['id'];
     id = (id is String) ? int.parse(id) : id;
+    
+    print(!_pendingRequests.containsKey(id));
+    
     if (!_pendingRequests.containsKey(id)) return false;
     if (response.containsKey('result')) return true;
 
+    print(!response.containsKey('error'));
+    
     if (!response.containsKey('error')) return false;
     var error = response['error'];
     if (error is! Map) return false;
