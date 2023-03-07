@@ -209,8 +209,7 @@ class Client {
 
   /// Handles a decoded response from the server after batches have been
   /// resolved.
-  void _handleSingleResponse(response) {
-    print('valid response'+_isResponseValid(response));
+  void _handleSingleResponse(response) {   
     if (!_isResponseValid(response)) return;
     var id = response['id'];
     id = (id is String) ? int.parse(id) : id;
